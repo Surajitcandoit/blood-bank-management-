@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card shadow-sm mx-auto mt-4" style="max-width: 600px;">
+    <div class="card-header bg-danger text-white">
+        <h4 class="mb-0">Submit Blood Request</h4>
+    </div>
+    
+    <div class="card-body">
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label class="form-label">Hospital ID (Your ID):</label>
+                <input type="number" name="hospital_id" class="form-control" required>
+                <div class="form-text">Enter your registered hospital ID number.</div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Required Blood Group:</label>
+                <select class="form-select" name="blood_group" required>
+                    <option value="" disabled selected>Choose blood type...</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Units Needed:</label>
+                <input type="number" name="units" class="form-control" placeholder="e.g., 5" min="1" required>
+            </div>
+
+            <button type="submit" class="btn btn-danger w-100">
+                Submit Request
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Blood Requests</h2>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %} alert-dismissible fade show shadow-sm" role="alert">
+            <strong>Notice:</strong> {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<table class="table table-bordered mt-3">
+
+<tr>
+    <th>ID</th>
+    <th>Hospital</th>
+    <th>Blood Group</th>
+    <th>Units</th>
+    <th>Status</th>
+</tr>
+
+{% for req in requests %}
+
+<tr>
+
+<td>{{ req.id }}</td>
+
+<td>{{ req.hospital_id }}</td>
+
+<td>{{ req.blood_group }}</td>
+
+<td>{{ req.units }}</td>
+
+<td>
+
+{% if req.status == "Pending" %}
+<span class="badge bg-warning">
+Pending
+</span>
+
+{% elif req.status == "Approved" %}
+<span class="badge bg-success">
+Approved
+</span>
+
+{% else %}
+<span class="badge bg-danger">
+Rejected
+</span>
+{% endif %}
+
+</td>
+
+{% if request.session.role == 'admin' %}
+
+<td>
+
+{% if req.status == "Pending" %}
+
+<a href="/request/{{ req.id }}/approve/"
+   class="btn btn-success btn-sm">
+
+Approve
+
+</a>
+
+<a href="/request/{{ req.id }}/reject/"
+   class="btn btn-danger btn-sm">
+
+Reject
+
+</a>
+
+{% endif %}
+
+</td>
+
+{% endif %}
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

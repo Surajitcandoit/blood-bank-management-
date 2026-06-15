@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if request.session.role == 'admin' %}
+
+<h2>Add Hospital</h2>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<input
+type="text"
+name="hospital_name"
+placeholder="Hospital Name"
+class="form-control mb-2">
+
+<input
+type="text"
+name="address"
+placeholder="Address"
+class="form-control mb-2">
+
+<input
+type="text"
+name="phone"
+placeholder="Phone"
+class="form-control mb-2">
+
+<input
+type="text"
+name="license_no"
+placeholder="License Number"
+class="form-control mb-2">
+
+<button
+class="btn btn-success">
+
+Add Hospital
+
+</button>
+
+</form>
+
+{% endif %}
+
+<hr>
+
+<h2>Hospital Lists</h2>
+
+<table class="table table-bordered">
+
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Phone</th>
+    <th>Address</th>
+</tr>
+
+{% for hospital in hospitals %}
+
+<tr>
+    <td>{{ hospital.id }}</td>
+    <td>{{ hospital.hospital_name }}</td>
+    <td>{{ hospital.phone }}</td>
+    <td>{{ hospital.address }}</td>
+
+{% if request.session.role == 'admin' %}
+    <td>
+        <a href="/hospital/delete/{{ hospital.id }}/"
+            class="btn btn-danger btn-sm">
+            Delete
+
+        </a>
+    </td>
+
+{% endif %}
+</tr>
+
+{% endfor %}
+
+
+
+</table>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card shadow-sm mx-auto mt-5" style="max-width: 500px;">
+    <div class="card-header bg-danger text-white">
+        <h4 class="mb-0">Record Blood Donation</h4>
+    </div>
+    
+    <div class="card-body">
+        <form method="POST">
+            {% csrf_token %}
+            
+            <input type="hidden" name="blood_group" value="{{ blood_group }}">
+            
+            <div class="mb-3">
+                <label>Donor ID:</label>
+                <input type="text" class="form-control" value="{{ donor_id }}" disabled>
+            </div>
+
+            <div class="mb-3">
+                <label>Blood Group:</label>
+                <input type="text" class="form-control" value="{{ blood_group }}" disabled>
+            </div>
+
+            <div class="mb-3">
+                <label class="fw-bold">Units Donated:</label>
+                <input type="number" name="units" class="form-control" placeholder="e.g. 1" required min="1">
+            </div>
+
+            <button class="btn btn-success w-100" type="submit">
+                Submit Donation
+            </button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

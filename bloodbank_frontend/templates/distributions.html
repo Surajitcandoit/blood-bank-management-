@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Distribution History</h2>
+
+<table class="table table-bordered">
+
+<tr>
+    <th>ID</th>
+    <th>Request ID</th>
+    <th>Hospital ID</th>
+    <th>Blood Group</th>
+    <th>Units</th>
+    <th>Date</th>
+</tr>
+
+{% for dist in distributions %}
+
+<tr>
+
+<td>{{ dist.id }}</td>
+
+<td>{{ dist.request_id }}</td>
+
+<td>{{ dist.hospital_id }}</td>
+
+<td>{{ dist.blood_group }}</td>
+
+<td>{{ dist.units }}</td>
+
+<td>{{ dist.distribution_date }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

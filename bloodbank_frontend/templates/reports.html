@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Reports & Analytics</h2>
+
+<div class="row">
+
+    <div class="col-md-3">
+        <div class="card p-3">
+            <h5>Total Donors</h5>
+            <h3>{{ dashboard.total_donors }}</h3>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card p-3">
+            <h5>Total Hospitals</h5>
+            <h3>{{ dashboard.total_hospitals }}</h3>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card p-3">
+            <h5>Approved Requests</h5>
+            <h3>{{ dashboard.approved_requests }}</h3>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card p-3">
+            <h5>Pending Requests</h5>
+            <h3>{{ dashboard.pending_requests }}</h3>
+        </div>
+    </div>
+
+</div>
+<div style="width:400px; height:400px;">
+    <canvas id="requestChart"></canvas>
+</div>
+<hr>
+
+<h4>Low Stock Blood Groups</h4>
+
+<table class="table table-bordered">
+
+<tr>
+    <th>Blood Group</th>
+    <th>Units</th>
+</tr>
+
+{% for item in low_stock %}
+<tr>
+    <td>{{ item.blood_group }}</td>
+    <td>{{ item.units }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+<hr>
+
+<h4>Expired Blood Units</h4>
+
+<table class="table table-bordered">
+
+<tr>
+    <th>Blood Group</th>
+    <th>Units</th>
+    <th>Expiry Date</th>
+</tr>
+
+{% for item in expired %}
+<tr>
+    <td>{{ item.blood_group }}</td>
+    <td>{{ item.units }}</td>
+    <td>{{ item.expiry_date }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+<a href="/reports/pdf/"
+   class="btn btn-danger mb-3">
+
+Download PDF Report
+
+</a>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const approved = Number("{{ dashboard.approved_requests|default:'0' }}");
+const pending = Number("{{ dashboard.pending_requests|default:'0' }}");
+
+const ctx = document.getElementById('requestChart');
+
+new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Approved', 'Pending'],
+        datasets: [{
+            data: [approved, pending]
+        }]
+    }
+});
+
+</script>
+
+
+
+{% endblock %}
+

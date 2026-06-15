@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Blood Inventory</h2>
+
+<form method="GET" class="mb-3">
+
+    <input
+        type="text"
+        name="blood_group"
+        placeholder="Search Blood Group (O+, A+, B+, AB+)"
+        class="form-control">
+
+</form>
+
+
+<table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Blood Group</th>
+            <th>Units</th>
+            <th>Collection Date</th>
+            <th>Expiry Date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for item in inventory %}
+            {% if item.units < 5 %}
+            <tr class="table-danger">
+            {% elif item.units < 10 %}
+            <tr class="table-warning">
+            {% else %}
+            <tr class="table-success">
+            {% endif %}
+
+                <td>{{ item.id }}</td>
+                <td>{{ item.blood_group }}</td>
+                <td>{{ item.units }}</td>
+                <td>{{ item.collection_date }}</td>
+                <td>{{ item.expiry_date }}</td>
+                <td>
+                    {% if item.units < 5 %} Low Stock 
+                    {% elif item.units < 10 %} Moderate
+                    {% else %} Good {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+
+
+{% endblock %}

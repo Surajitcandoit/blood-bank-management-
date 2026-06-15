@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Donors</h2>
+{% if request.session.role == 'admin' %}
+
+<h2>Add Donor</h2>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<input
+type="text"
+name="name"
+placeholder="Name"
+class="form-control mb-2">
+
+<input
+type="text"
+name="blood_group"
+placeholder="Blood Group"
+class="form-control mb-2">
+
+<input
+type="number"
+name="age"
+placeholder="Age"
+class="form-control mb-2">
+
+<input
+type="text"
+name="phone"
+placeholder="Phone"
+class="form-control mb-2">
+
+<input
+type="text"
+name="address"
+placeholder="Address"
+class="form-control mb-2">
+
+<button
+class="btn btn-success">
+
+Add Donor
+
+</button>
+
+</form>
+
+{% endif %}
+
+<form method="GET" class="mb-3">
+
+<input
+type="text"
+name="blood_group"
+placeholder="Search Blood Group"
+class="form-control">
+
+</form>
+
+
+<hr>
+
+<table class="table table-bordered">
+
+    <tr>
+        <th>ID</th>
+        <th>Blood Group</th>
+        <th>Age</th>
+        <th>Phone</th>
+        <th>Address</th>
+    </tr>
+
+    {% for donor in donors %}
+    <tr>
+        <td>{{ donor.id }}</td>
+        <td>{{ donor.blood_group }}</td>
+        <td>{{ donor.age }}</td>
+        <td>{{ donor.phone }}</td>
+        <td>{{ donor.address }}</td>
+    {% if request.session.role == 'admin' %}
+        <td>
+            <a href="/donor/{{ donor.id }}/donate/?bg={{ donor.blood_group }}"
+               class="btn btn-primary btn-sm mb-1">
+               Record Donation
+            </a>
+
+            <a href="/donor/delete/{{ donor.id }}/"
+               class="btn btn-danger btn-sm mb-1">
+               Delete
+            </a>
+        </td>
+    {% endif %}
+    </tr>
+    {% endfor %} 
+
+</table>
+
+{% endblock %}
