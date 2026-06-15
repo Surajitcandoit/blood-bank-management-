@@ -42,7 +42,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins (change to your Django URL in production, e.g., ["http://localhost:8000"])
+    allow_origins=["https://blood-bank-management-635y.onrender.com"],  # Allows all origins (change to your Django URL in production, e.g., ["http://localhost:8000"])
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
