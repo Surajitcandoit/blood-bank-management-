@@ -7,7 +7,7 @@ import requests
 from django.contrib import messages
 import os
 # If API_URL isn't set, it defaults to your local server for testing
-API_BASE_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
+API_BASE_URL = os.getenv("API_URL", "http://127.0.0.1:8000").rstrip('/')
 
 def landing_page(request):
     # If the user is already logged in, skip the landing page
